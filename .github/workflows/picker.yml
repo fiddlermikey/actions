@@ -1,0 +1,39 @@
+name: Picker Releaser Workflow
+
+on:
+  workflow_call:
+    inputs: 
+      buildtype: 
+        description: Platform to build
+        required: true
+        type: string  
+
+  
+
+jobs:
+  pick-workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run command
+        run: |
+         echo "Recieved ${{ inputs.buildtype }}"
+  run-go-workflow:
+    runs-on: ubuntu-latest
+    if: inputs.buildtype == "golang"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run command
+        run: |
+         echo "Recieved ${{ inputs.buildtype }}"
+  run-dotnet-workflow:
+    runs-on: ubuntu-latest
+    if: inputs.buildtype == "dotnet"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run command
+        run: |
+         echo "Recieved ${{ inputs.buildtype }}"
