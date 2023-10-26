@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run command
         run: |
-         echo "Recieved ${{ inputs.buildtype }}"
+         echo "Pick workflow recieved ${{ inputs.buildtype }}" | tee -a GITHUB_STEP_SUMMARY
   run-go-workflow:
     runs-on: ubuntu-latest
     if: ${{ inputs.buildtype }} == "golang"
@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@v4
       - name: Run command
         run: |
-         echo "Recieved ${{ inputs.buildtype }}"
+         echo "Pick workflow for golang recieved ${{ inputs.buildtype }}" | tee -a GITHUB_STEP_SUMMARY
   run-dotnet-workflow:
     runs-on: ubuntu-latest
     if: ${{ inputs.buildtype }} == "dotnet"
@@ -36,4 +36,4 @@ jobs:
         uses: actions/checkout@v4
       - name: Run command
         run: |
-         echo "Recieved ${{ inputs.buildtype }}"
+         echo "Pick workflow for golang recieved ${{ inputs.buildtype }}" | tee -a GITHUB_STEP_SUMMARY
