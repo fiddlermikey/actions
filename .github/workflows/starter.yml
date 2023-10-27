@@ -29,7 +29,7 @@ jobs:
       release_dir: ${{ inputs.release_dir }}
 
     secrets: 
-      token: ${{ secrets.PRIVATE_PACKAGE_ACCESS }}
+      token: ${{ secrets.SDK_SYNC_PAT }}
 
   call-go-build-and-tag-workflow:
     needs: [call-create-github-release-workflow]
@@ -40,7 +40,7 @@ jobs:
 
 
     secrets: 
-      token: ${{ secrets.PRIVATE_PACKAGE_ACCESS }}
+      token: ${{ secrets.SDK_SYNC_PAT }}
 
   #call-generate-readme-workflow:
   #  if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'

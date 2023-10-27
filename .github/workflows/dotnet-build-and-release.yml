@@ -15,10 +15,10 @@ on:
         description: The relative directory inside the repo where the build artifacts to publish for release will be located
         required: false # leave empty for non-release build
         type: string
-    #secrets:
-    #  token:
-    #    description: 'Secret token from caller workflow to access private packages'
-    #    required: true
+    secrets:
+      token:
+        description: 'Secret token from caller workflow to access private packages'
+        required: true
 
 jobs:
   ack:

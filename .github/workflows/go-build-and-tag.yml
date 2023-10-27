@@ -7,10 +7,10 @@ on:
         required: false
         type: string
         default: 1.0.0 # for non-released builds
-    #secrets:
-    #  token:
-    #    description: 'Secret token from caller workflow to access private packages'
-    #    required: true
+    secrets:
+      token:
+        description: 'Secret token from caller workflow to access private packages'
+        required: true
 
 jobs:
   ack:
