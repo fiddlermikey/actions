@@ -23,12 +23,12 @@ jobs:
 
   call-dotnet-build-and-release-workflow:
     needs: [call-assign-from-json-workflow, call-create-github-release-workflow]
-    if: needs.call-assign-from-json-workflow.name == 'dotnet'
+    if: needs.call-assign-from-json-workflow.outputs.name == 'dotnet'
     uses: fiddlermikey/actions/.github/workflows/dotnet-build-and-release.yml@dev
     with:
       release_version: ${{ needs.call-create-github-release-workflow.outputs.release_version }}
       release_url: ${{ needs.call-create-github-release-workflow.outputs.release_url }}
-      release_dir: ${{ needs.call-assign-from-json-workflow.release_dir }}
+      release_dir: ${{ needs.call-assign-from-json-workflow.outputs.release_dir }}
 
     secrets: 
       token: ${{ secrets.SDK_SYNC_PAT }}
