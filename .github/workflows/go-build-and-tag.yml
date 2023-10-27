@@ -1,0 +1,21 @@
+name: Build go solution and potentially create a tag for release
+on:
+  workflow_call:
+    inputs:
+      release_version:
+        description: The release version to use when publishing a build
+        required: false
+        type: string
+        default: 1.0.0 # for non-released builds
+    #secrets:
+    #  token:
+    #    description: 'Secret token from caller workflow to access private packages'
+    #    required: true
+
+jobs:
+  ack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ack
+        run: |
+          echo "This is the golang build project"
