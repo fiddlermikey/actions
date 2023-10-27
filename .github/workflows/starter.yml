@@ -22,7 +22,7 @@ jobs:
   call-dotnet-build-and-release-workflow:
     needs: [call-create-github-release-workflow]
     if: inputs.buildtype == 'dotnet'
-    uses: fiddlermikey/actions/.github/workflows/dotnet-build-and-release.yml@main
+    uses: fiddlermikey/actions/.github/workflows/dotnet-build-and-release.yml@dev
     with:
       release_version: ${{ needs.call-create-github-release-workflow.outputs.release_version }}
       release_url: ${{ needs.call-create-github-release-workflow.outputs.release_url }}
@@ -34,7 +34,7 @@ jobs:
   call-go-build-and-tag-workflow:
     needs: [call-create-github-release-workflow]
     if: inputs.buildtype == 'golang'
-    uses: fiddlermikey/actions/.github/workflows/go-build-and-tag.yml@main
+    uses: fiddlermikey/actions/.github/workflows/go-build-and-tag.yml@dev
     with:
       release_version: ${{ needs.call-create-github-release-workflow.outputs.release_version }}
 
