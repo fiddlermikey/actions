@@ -35,7 +35,7 @@ jobs:
 
   call-go-build-and-tag-workflow:
     needs: [call-assign-from-json-workflow, call-create-github-release-workflow]
-    if: needs.call-assign-from-json-workflow.name == 'golang'
+    if: needs.call-assign-from-json-workflow.outputs.name == 'golang'
     uses: fiddlermikey/actions/.github/workflows/go-build-and-tag.yml@dev
     with:
       release_version: ${{ needs.call-create-github-release-workflow.outputs.release_version }}
