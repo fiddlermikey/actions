@@ -1,0 +1,16 @@
+name: Bootstrap Starter Workflow
+on:
+  workflow_call:
+    inputs: 
+      buildtype: 
+        description: 'Platform to build'
+        required: true
+        type: string  
+
+jobs:
+  call-build-picker:
+    uses: fiddlermikey/actions/.github/workflows/picker.yml@main
+    with:
+      buildtype: ${{ inputs.buildtype }}
+
+
