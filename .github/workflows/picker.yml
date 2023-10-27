@@ -13,27 +13,27 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Run command
         run: |
-          echo "Pick workflow received ${{ github.event.inputs.buildtype }}" | tee -a $GITHUB_STEP_SUMMARY
+          echo "Pick workflow received ${{ inputs.buildtype }}" | tee -a $GITHUB_STEP_SUMMARY
 
   run-go-workflow:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.buildtype == 'golang' }}
+    if: ${{ inputs.buildtype == 'golang' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Run command
         run: |
-          echo "Pick workflow for golang received ${{ github.event.inputs.buildtype }}" | tee -a $GITHUB_STEP_SUMMARY
+          echo "Pick workflow for golang received ${{ inputs.buildtype }}" | tee -a $GITHUB_STEP_SUMMARY
 
   run-dotnet-workflow:
     runs-on: ubuntu-latest
-    if: ${{ github.event.inputs.buildtype == 'dotnet' }}
+    if: ${{ inputs.buildtype == 'dotnet' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
       - name: Run command
         run: |
-          echo "Pick workflow for dotnet received ${{ github.event.inputs.buildtype }}" | tee -a $GITHUB_STEP_SUMMARY
+          echo "Pick workflow for dotnet received ${{ inputs.buildtype }}" | tee -a $GITHUB_STEP_SUMMARY
