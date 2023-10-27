@@ -1,39 +1,41 @@
 name: Bootstrap Starter Workflow
 on:
   workflow_call:
-    inputs: 
-      buildtype: 
-        description: 'Platform to build'
-        required: true
-        type: string  
-      release_dir: 
-        description: 'release_dir property from integration-manifest.json'
-        required: true
-        type: string  
-      update_catalog: 
-        description: 'update_catalog property from integration-manifest.json'
-        required: true
-        type: string  
+    #inputs: 
+    #  buildtype: 
+    #    description: 'Platform to build'
+    #    required: true
+    #    type: string  
+    #  release_dir: 
+    #    description: 'release_dir property from integration-manifest.json'
+    #    required: true
+    #    type: string  
+    #  update_catalog: 
+    #    description: 'update_catalog property from integration-manifest.json'
+    #    required: true
+    #    type: string  
 
 jobs:
+  call-assign-from-json-workflow:
+    uses: Keyfactor/actions/.github/workflows/assign-env-from-json.yml@main
   call-create-github-release-workflow:
     uses: Keyfactor/actions/.github/workflows/github-release.yml@support-hotfixes
 
   call-dotnet-build-and-release-workflow:
-    needs: [call-create-github-release-workflow]
-    if: inputs.buildtype == 'dotnet'
+    needs: [call-assign-from-json-workflow, call-create-github-release-workflow]
+    if: needs.call-assign-from-json-workflow.name == 'dotnet'
     uses: fiddlermikey/actions/.github/workflows/dotnet-build-and-release.yml@dev
     with:
       release_version: ${{ needs.call-create-github-release-workflow.outputs.release_version }}
       release_url: ${{ needs.call-create-github-release-workflow.outputs.release_url }}
-      release_dir: ${{ inputs.release_dir }}
+      release_dir: ${{ needs.call-assign-from-json-workflow.release_dir }}
 
     secrets: 
       token: ${{ secrets.SDK_SYNC_PAT }}
 
   call-go-build-and-tag-workflow:
-    needs: [call-create-github-release-workflow]
-    if: inputs.buildtype == 'golang'
+    needs: [call-assign-from-json-workflow, call-create-github-release-workflow]
+    if: needs.call-assign-from-json-workflow.name == 'golang'
     uses: fiddlermikey/actions/.github/workflows/go-build-and-tag.yml@dev
     with:
       release_version: ${{ needs.call-create-github-release-workflow.outputs.release_version }}
