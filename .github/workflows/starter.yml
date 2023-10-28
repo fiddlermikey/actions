@@ -35,7 +35,7 @@ jobs:
       - name: Display type
         id: display
         run: |
-          echo ${{ steps.read.outputs.primary_language}} | tee -a $GITHUB_STEP_SUMMARY
+          echo "primaryLanguage=${{ steps.read.outputs.primary_language}}" | tee -a "$GITHUB_OUTPUT" | tee -a $GITHUB_STEP_SUMMARY
 
   call-create-github-release-workflow:
     uses: Keyfactor/actions/.github/workflows/github-release.yml@support-hotfixes
