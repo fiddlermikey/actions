@@ -18,12 +18,29 @@ on:
 jobs:
   call-assign-from-json-workflow:
     uses: Keyfactor/actions/.github/workflows/assign-env-from-json.yml@main
+
+  call-get-primary-language:
+    outputs:
+      primaryLanguage: ${{ steps.read.outputs.primary_language }}
+    runs-on: ubuntu-latest
+    name: Detect Primary Language
+    steps:
+      - name: Read primary language
+        id: read
+        uses: fiddlermikey/action-get-primary-language@v1.0
+        with:
+          token: ${{ secrets.GH_PAT}}
+      - name: Display type
+        id: display
+        run: |
+          echo ${{ steps.read.outputs.primary_language}} | tee -a $GITHUB_STEP_SUMMARY
+
   call-create-github-release-workflow:
     uses: Keyfactor/actions/.github/workflows/github-release.yml@support-hotfixes
 
   call-dotnet-build-and-release-workflow:
-    needs: [call-assign-from-json-workflow, call-create-github-release-workflow]
-    if: needs.call-assign-from-json-workflow.outputs.name == 'dotnet'
+    needs: [call-get-primary-language, call-assign-from-json-workflow, call-create-github-release-workflow]
+    if: needs.call-get-primary-language.outputs.primary_language == 'C#'
     uses: fiddlermikey/actions/.github/workflows/dotnet-build-and-release.yml@dev
     with:
       release_version: ${{ needs.call-create-github-release-workflow.outputs.release_version }}
@@ -34,8 +51,8 @@ jobs:
       token: ${{ secrets.SDK_SYNC_PAT }}
 
   call-go-build-and-tag-workflow:
-    needs: [call-assign-from-json-workflow, call-create-github-release-workflow]
-    if: needs.call-assign-from-json-workflow.outputs.name == 'golang'
+    needs: [call-get-primary-language, call-assign-from-json-workflow, call-create-github-release-workflow]
+    if: needs.call-get-primary-language.outputs.primary_language == 'Go'
     uses: fiddlermikey/actions/.github/workflows/go-build-and-tag.yml@dev
     with:
       release_version: ${{ needs.call-create-github-release-workflow.outputs.release_version }}
