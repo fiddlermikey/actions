@@ -21,7 +21,7 @@ jobs:
 
   call-get-primary-language:
     outputs:
-      primaryLanguage: ${{ steps.read.outputs.primary_language }}
+      primary_language: ${{ steps.read.outputs.primary_language }}
     runs-on: ubuntu-latest
     name: Detect Primary Language
     steps:
@@ -35,7 +35,7 @@ jobs:
       - name: Display type
         id: display
         run: |
-          echo "primaryLanguage=${{ steps.read.outputs.primary_language}}" | tee -a "$GITHUB_OUTPUT" | tee -a $GITHUB_STEP_SUMMARY
+          echo "primary_language=${{ steps.read.outputs.primary_language}}" | tee -a "$GITHUB_OUTPUT" | tee -a $GITHUB_STEP_SUMMARY
 
   call-create-github-release-workflow:
     uses: Keyfactor/actions/.github/workflows/github-release.yml@support-hotfixes
